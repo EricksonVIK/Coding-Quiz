@@ -70,7 +70,7 @@ header div p{
     border-radius: 10%;
 }
 
-.question{
+.question, .finalpage{
     color:black;
     width: 100%;
     display: flex;
@@ -112,5 +112,17 @@ header div p{
 .answerResp{
     margin-right: 40px;
     padding: 30px;
+}
+
+.doneblock{
+    width:75%
+}
+.scoresave {
+   width:fit-content; 
+   flex:wrap;
+   display: flex;
+   flex-direction: row;
+   align-content: space-around;
+   margin:0;
 }
 

@@ -1,9 +1,6 @@
 // Variables
-// pageContent - main body id page-content
-// timerDiv - div in header - timer
-// timerClock - p under div in header
+// main page
 var mainPage = document.querySelector("#landing");
-console.log(mainPage);
 
 var timeLeft = 5;
 var timedInterval;
@@ -18,7 +15,117 @@ var timerClock = document.createElement("p");
 // add timer page
 timerDiv.appendChild(timerClock);
 
-timerDiv.appendChild(timerClock);
+// timerDiv.appendChild(timerClock);
+
+// qUESTION BLOCK ELEMENTS
+// aiming on sections
+var questionSect = document.querySelector("#question");
+var finalSect = document.querySelector("#finalpage");
+
+// create 2 divs for text and question section
+var questionNum = document.createElement("div");
+var answerBlock = document.createElement("div");
+answerBlock.className = ("answerBlock"); 
+
+// create h1 - question text
+var questionText = document.createElement("h1");
+questionText.textContent = " This is a placeholder for question #1."
+
+// create 2 div for answer block
+// create choice div
+var multiChoice = document.createElement("div");
+multiChoice.className = ("questionActual");
+// create response div
+var answerResp = document.createElement("div");
+answerResp.className = ("answerResp");
+
+// create buttons for choice
+var choiceA = document.createElement("button");
+choiceA.className = ("choiceA");
+choiceA.textContent = ("Option A");
+
+var choiceB = document.createElement("button");
+choiceB.className = ("choiceB");
+choiceB.textContent = ("Option B");
+
+var choiceC = document.createElement("button");
+choiceC.className = ("choiceC");
+choiceC.textContent = ("Option C");
+
+var choiceD = document.createElement("button");
+choiceD.className = ("choiceD");
+choiceD.textContent = ("Option D");
+
+// create response p
+var corrIncNote = document.createElement("p");
+corrIncNote.textContent= ("Answer!");
+
+// Final page elements
+// Section creation
+var doneBlock = document.createElement("section");
+
+// done message div and h1
+var doneMsgBlock = document.createElement("div");
+var doneMsg = document.createElement("h1");
+
+// score message div and h1
+var scoreBlock=document.createElement("div");
+var scoreMsg = document.createElement("h1");
+
+// final submit div with input and save button
+var scoreSub = document.createElement("div");
+var scoreInp =  document.createElement("input");
+var submitFinal = document.createElement("button"); 
+var initialP = document.createElement("p");      
+
+
+// make landing page disapear
+function backgroundClear(){
+    mainPage.style.height = "10px";
+    mainPage.style.visibility="hidden";
+};
+
+function questionClear(){
+    questionSect.style.height = "1px";
+    questionSect.style.visibility="hidden";
+};
+
+// function finalPage(){
+//     // mainpage still clear
+//     backgroundClear();
+//     // question section clear
+//     questionClear();
+//     function createFinal(){
+//         // append section
+//         finalSect.appendChild(doneBlock);
+//         doneBlock.className=("doneBlock");
+//         // add class and append divs
+//         doneBlock.appendChild(doneMsgBlock);
+//         doneBlock.appendChild(scoreBlock);
+//         doneBlock.appendChild(scoreSub);
+//         // add text and append div child elements
+//         // div 1
+//         doneMsg.textContent= "All Done!"
+//         doneMsg.className =("doneMsg");
+//         doneMsgBlock.append(doneMsg);
+//         // div2
+//         scoreMsg.textContent= "Final Score is 'Placholder for final'";
+//         scoreMsg.className = ("scoreMsg");
+//         scoreBlock.appendChild(scoreMsg);
+//         // div 3
+//         scoreSub.className=("scoresave");
+//         initialP.className=("initials");
+//         initialP.textContent="Initials";
+//         scoreSub.appendChild(initialP);
+//         scoreInp.textContent = "Initials";
+//         scoreInp.className = ("scoreInp");
+//         scoreSub.appendChild(scoreInp);
+//         submitFinal.className = "submitBtn"
+//         submitFinal.innerHTML=("Save");
+//         scoreSub.appendChild(submitFinal);
+//     };
+//     createFinal();
+// };
 
 // timerClock.textContent = (countdown());
 startBtn.addEventListener("click", function (){
@@ -31,9 +138,11 @@ startBtn.addEventListener("click", function (){
         } else {
             // go to final page
             console.log('hit')
-            timerClock.innerHTML = "Time's Up!"
+            timerClock.innerHTML = "";
+            // alert("Times Up!")
             clearInterval(timedInterval);
-            return
+            // return
+            finalPage()
         };
         timeLeft --;
     }, 1000);
@@ -87,76 +196,73 @@ var questionsArr = [
 // question #1
 // select the section
 // add data attribute to question
-// 
+
 startBtn.addEventListener("click", function (){
+    function questionCreation(){
 
-    // make landing page disapear
-    function backgroundClear(){
-        mainPage.style.height = "10px";
-        mainPage.style.visibility="hidden";
+        backgroundClear();
+    
+        // append first 2 divs
+        questionSect.appendChild(questionNum);
+        questionSect.appendChild(answerBlock);
+
+        // append h1 into question div
+        questionNum.appendChild(questionText);
+    
+        // append answer and response to block
+        answerBlock.appendChild(multiChoice);
+        answerBlock.appendChild(answerResp);
+
+        // append choices under multichoice div
+        multiChoice.appendChild(choiceA);
+        multiChoice.appendChild(choiceB);
+        multiChoice.appendChild(choiceC);
+        multiChoice.appendChild(choiceD);
+
+        // append response p
+        answerResp.appendChild(corrIncNote);
     };
+    questionCreation()
+})
+
+// create final page
+
+function finalPage(){
+    // mainpage still clear
     backgroundClear();
-    // aiming on section
-    var questionSect = document.querySelector("#question");
-
-    // create 2 divs for text and question section
-    var questionNum = document.createElement("div");
-    var answerBlock = document.createElement("div");
-    answerBlock.className = ("answerBlock"); 
-
-    // append first 2 divs
-    questionSect.appendChild(questionNum);
-    questionSect.appendChild(answerBlock);
-
-    // create h1 - question text
-    var questionText = document.createElement("h1");
-    questionText.textContent = " This is a placeholder for question #1."
-
-    // append h1 into question div
-    questionNum.appendChild(questionText);
-
-    // create 2 div for answer block
-    // create choice div
-    var multiChoice = document.createElement("div");
-    multiChoice.className = ("questionActual");
-    // create response div
-    var answerResp = document.createElement("div");
-    answerResp.className = ("answerResp");
-    
-    // append answer and response to block
-    answerBlock.appendChild(multiChoice);
-    answerBlock.appendChild(answerResp);
-
-    // create buttons for choice
-    var choiceA = document.createElement("button");
-    choiceA.className = ("choiceA");
-    choiceA.textContent = ("Option A");
-
-    var choiceB = document.createElement("button");
-    choiceB.className = ("choiceB");
-    choiceB.textContent = ("Option B");
-
-    var choiceC = document.createElement("button");
-    choiceC.className = ("choiceC");
-    choiceC.textContent = ("Option C");
-
-    var choiceD = document.createElement("button");
-    choiceD.className = ("choiceD");
-    choiceD.textContent = ("Option D");
-    
-    // append choices under multichoice div
-    multiChoice.appendChild(choiceA);
-    multiChoice.appendChild(choiceB);
-    multiChoice.appendChild(choiceC);
-    multiChoice.appendChild(choiceD);
-
-    // create response p
-    var corrIncNote = document.createElement("p");
-    corrIncNote.textContent= ("Answer!");
-
-    // append response p
-    answerResp.appendChild(corrIncNote);
-});
+    // question section clear
+    questionClear();
+    function createFinal(){
+        // append section
+        finalSect.appendChild(doneBlock);
+        doneBlock.className=("doneBlock");
+        // add class and append divs
+        doneBlock.appendChild(doneMsgBlock);
+        doneBlock.appendChild(scoreBlock);
+        doneBlock.appendChild(scoreSub);
+        // add text and append div child elements
+        // div 1
+        doneMsg.textContent= "All Done!"
+        doneMsg.className =("doneMsg");
+        doneMsgBlock.append(doneMsg);
+        // div2
+        scoreMsg.textContent= "Final Score is 'Placholder for final'";
+        scoreMsg.className = ("scoreMsg");
+        scoreBlock.appendChild(scoreMsg);
+        // div 3
+        scoreSub.className=("scoresave");
+        initialP.className=("initials");
+        initialP.textContent="Initials";
+        scoreSub.appendChild(initialP);
+        scoreInp.textContent = "Initials";
+        scoreInp.className = ("scoreInp");
+        scoreSub.appendChild(scoreInp);
+        submitFinal.className = "submitBtn"
+        submitFinal.innerHTML=("Save");
+        scoreSub.appendChild(submitFinal);
+    };
+    createFinal();
+};
 
 
 
