@@ -90,42 +90,6 @@ function questionClear(){
     questionSect.style.visibility="hidden";
 };
 
-// function finalPage(){
-//     // mainpage still clear
-//     backgroundClear();
-//     // question section clear
-//     questionClear();
-//     function createFinal(){
-//         // append section
-//         finalSect.appendChild(doneBlock);
-//         doneBlock.className=("doneBlock");
-//         // add class and append divs
-//         doneBlock.appendChild(doneMsgBlock);
-//         doneBlock.appendChild(scoreBlock);
-//         doneBlock.appendChild(scoreSub);
-//         // add text and append div child elements
-//         // div 1
-//         doneMsg.textContent= "All Done!"
-//         doneMsg.className =("doneMsg");
-//         doneMsgBlock.append(doneMsg);
-//         // div2
-//         scoreMsg.textContent= "Final Score is 'Placholder for final'";
-//         scoreMsg.className = ("scoreMsg");
-//         scoreBlock.appendChild(scoreMsg);
-//         // div 3
-//         scoreSub.className=("scoresave");
-//         initialP.className=("initials");
-//         initialP.textContent="Initials";
-//         scoreSub.appendChild(initialP);
-//         scoreInp.textContent = "Initials";
-//         scoreInp.className = ("scoreInp");
-//         scoreSub.appendChild(scoreInp);
-//         submitFinal.className = "submitBtn"
-//         submitFinal.innerHTML=("Save");
-//         scoreSub.appendChild(submitFinal);
-//     };
-//     createFinal();
-// };
 
 // timerClock.textContent = (countdown());
 startBtn.addEventListener("click", function (){
