@@ -82,6 +82,14 @@ header div p{
 
 .questionActual {
     align-items: left;
+    width:fit-content;
+}
+
+.answerBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
     width:75%;
 }
 .choiceA, .choiceB, .choiceC, .choiceD{
@@ -90,6 +98,8 @@ header div p{
     background-color: var(---buttoncolor);
     color: var(---secondary-textcolor);
     margin: 15px;
+    margin-left:30px;
+    margin-right:30px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -98,3 +108,9 @@ header div p{
     border: 3px, solid, var(---primaryborder);
     border-radius: 10%;
 }
+
+.answerResp{
+    margin-right: 40px;
+    padding: 30px;
+}
+
