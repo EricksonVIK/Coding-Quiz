@@ -4,7 +4,7 @@
 
 :root {
     ---primary-textcolor: rgb(29, 29, 233);
-    ---secondary-textcolor: rgb(207, 221, 240);
+    ---secondary-textcolor: rgb(249, 250, 252);
     ---buttoncolor: blue;
     ---primaryborder: darkblue;
 }
@@ -38,7 +38,7 @@ header div p{
     border-color: 3px, solid, white;
 }
 
-section {
+.landing {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -46,11 +46,11 @@ section {
     justify-content: space-around;
 }
 
-section h1 {
+.landing h1 {
     font-size:35px;
 }
 
-section div {
+.landing div {
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -59,7 +59,7 @@ section div {
     font-size: 20px;
 }
 
-.go{
+.goButton{
     width: fit-content;
     height: fit-content;
     font-size: 36px;
@@ -69,3 +69,60 @@ section div {
     border: 3px, solid var(---primaryborder);
     border-radius: 10%;
 }
+
+.question, .finalpage{
+    color:black;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-size:30px;
+}
+
+.questionActual {
+    align-items: left;
+    width:fit-content;
+}
+
+.answerBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width:75%;
+}
+.choiceA, .choiceB, .choiceC, .choiceD{
+    width: fit-content;
+    height: fit-content;
+    background-color: var(---buttoncolor);
+    color: var(---secondary-textcolor);
+    margin: 15px;
+    margin-left:30px;
+    margin-right:30px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: left;
+    font-size: 22px;
+    border: 3px, solid, var(---primaryborder);
+    border-radius: 10%;
+}
+
+.answerResp{
+    margin-right: 40px;
+    padding: 30px;
+}
+
+.doneblock{
+    width:75%
+}
+.scoresave {
+   width:fit-content; 
+   flex:wrap;
+   display: flex;
+   flex-direction: row;
+   align-content: space-around;
+   margin:0;
+}
+
