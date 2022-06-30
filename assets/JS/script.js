@@ -305,4 +305,25 @@ submitFinal.addEventListener("click", function (){
 goBackBtn.addEventListener("click", function (){
     location.reload();
 });
-// function to save scores, track high score, add initials to save
+
+// *** Need to do ***
+// function to show correct/worn element - can it make a sound? how do i track answers? Assign correct true values to data (element.getAttribute(some data id from array?)) attribute?
+// function to attach data attribute to questions - fill in array
+// function to add initals, save (saveTasks), and track high score
+// funtion for "view high score button"
+// function for clear high scores
+// funtion to attach pull scores back in?
+
+// possible saved score function
+var savedScores = function(){
+    localStorage.setItem("scores", JSON.stringify(tasks));
+};
+
+// possible load score function
+var loadScores = function(){
+    var savedScores = localStorage.getItem("scores");
+    if (savedScores === null){
+        var savedScores = [];
+        return false;
+    }
+};
