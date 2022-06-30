@@ -17,7 +17,7 @@ timerDiv.appendChild(timerClock);
 
 // timerDiv.appendChild(timerClock);
 
-// qUESTION BLOCK ELEMENTS
+// QUESTION BLOCK ELEMENTS
 // aiming on sections
 var questionSect = document.querySelector("#question");
 var finalSect = document.querySelector("#finalpage");
@@ -63,25 +63,60 @@ corrIncNote.textContent= ("Answer!");
 // Final page elements
 // Section creation
 var doneBlock = document.createElement("section");
+doneBlock.className=("doneBlock");
 
 // done message div and h1
 var doneMsgBlock = document.createElement("div");
 var doneMsg = document.createElement("h1");
-
+doneMsg.className =("doneMsg");
+console.log(doneMsg);
 // score message div and h1
 var scoreBlock=document.createElement("div");
 var scoreMsg = document.createElement("h1");
+scoreMsg.className = ("scoreMsg");
 
 // final submit div with input and save button
 var scoreSub = document.createElement("div");
 var scoreInp =  document.createElement("input");
 var submitFinal = document.createElement("button"); 
 var initialP = document.createElement("p");      
+scoreSub.className=("scoresave");
+initialP.className=("initials");
+scoreInp.className = ("scoreInp");
+submitFinal.className = "submitBtn";
+
+// high score page dom's
+var scorePageFinal = document.querySelector("#scorepage");
+
+// Create scorepage div
+var highScoreBlock = document.createElement("div");
+highScoreBlock.className = ("highscoreblock")
+
+// Create highscoreblock divs x 3
+var highScoreMsg = document.createElement("div");
+highScoreMsg.className = ("highscoremsg")
+var highScoreList = document.createElement("div");
+highScoreList.className = ("highscorelist")
+var highScoreBtn = document.createElement("div");
+highScoreBtn.className = ("highscorebtn");
+
+// Create message hi
+var highScore = document.createElement("h1");
+highScore.className = ("highscore")
+
+// Create Div (placeholder for high score recall) - Check taskmaster for code
+var highScores = document.createElement ("li");
+highScores.className = ("highscores")
+
+// create 2 buttons - go back - clear high score
+var goBackBtn = document.createElement("button");
+goBackBtn.className = ("BackBtn");
+var clearScoreBtn = document.createElement("button")
 
 
 // make landing page disapear
 function backgroundClear(){
-    mainPage.style.height = "10px";
+    mainPage.style.height = "1px";
     mainPage.style.visibility="hidden";
 };
 
@@ -89,6 +124,13 @@ function questionClear(){
     questionSect.style.height = "1px";
     questionSect.style.visibility="hidden";
 };
+
+function finalPageClear(){
+    finalSect.style.height = "1px";
+    finalSect.style.visibility ="hidden";
+}
+
+
 
 
 // timerClock.textContent = (countdown());
@@ -199,7 +241,6 @@ function finalPage(){
     function createFinal(){
         // append section
         finalSect.appendChild(doneBlock);
-        doneBlock.className=("doneBlock");
         // add class and append divs
         doneBlock.appendChild(doneMsgBlock);
         doneBlock.appendChild(scoreBlock);
@@ -211,24 +252,57 @@ function finalPage(){
         doneMsgBlock.append(doneMsg);
         // div2
         scoreMsg.textContent= "Final Score is 'Placholder for final'";
-        scoreMsg.className = ("scoreMsg");
+        // scoreMsg.className = ("scoreMsg");
         scoreBlock.appendChild(scoreMsg);
         // div 3
-        scoreSub.className=("scoresave");
-        initialP.className=("initials");
+        // scoreSub.className=("scoresave");
+        // initialP.className=("initials");
         initialP.textContent="Initials";
         scoreSub.appendChild(initialP);
         scoreInp.textContent = "Initials";
-        scoreInp.className = ("scoreInp");
+        // scoreInp.className = ("scoreInp");
         scoreSub.appendChild(scoreInp);
-        submitFinal.className = "submitBtn"
+        // submitFinal.className = "submitBtn"
         submitFinal.innerHTML=("Save");
         scoreSub.appendChild(submitFinal);
     };
     createFinal();
 };
 
+// create high score page
+submitFinal.addEventListener("click", function (){
+    function createSubPage(){
+        backgroundClear();
+        questionClear();
+        finalPageClear();
 
+        // append Parent div highScoreBlock
+        scorePageFinal.appendChild(highScoreBlock);
 
+        // append the 3 divs into parent block
+        highScoreBlock.appendChild(highScoreMsg);
+        highScoreBlock.appendChild(highScoreList);
+        highScoreBlock.appendChild(highScoreBtn);
+
+        // append h1 into highscoremsg
+        highScore.textContent="HIGH SCORES";
+        highScoreMsg.appendChild(highScore);
+
+        // append li score list into highScoreList
+        highScores.textContent= [1, 2, 3, 4, 5];
+        highScoreList.appendChild(highScores);
+
+        // append the buttons into highScoreBtn
+        goBackBtn.textContent ="GoBack";
+        highScoreBtn.appendChild(goBackBtn);
+        clearScoreBtn.textContent = "Clear High Scores";
+        highScoreBtn.appendChild(clearScoreBtn);
+    }
+    createSubPage();
+});
+
+// reload page function/start over
+goBackBtn.addEventListener("click", function (){
+    location.reload();
+});
 // function to save scores, track high score, add initials to save
-// button to go back to start/landing page to start over
