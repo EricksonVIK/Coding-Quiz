@@ -6,7 +6,9 @@ var timeLeft = 5;
 var timedInterval;
 var startBtn = document.querySelector("#goButton");
 var corrIncNote = document.createElement("button");
-corrIncNote.innerHTML = "Answer!"
+corrIncNote.innerHTML = ""
+
+var questionTracking = 0;
 
 // selecting timer parent "div"
 var timerDiv = document.getElementById("timer");
@@ -16,49 +18,10 @@ var timerClock = document.createElement("p");
 timerDiv.appendChild(timerClock);
 
 // timerDiv.appendChild(timerClock);
-
-// QUESTION BLOCK ELEMENTS
 // aiming on sections
 var questionSect = document.querySelector("#question");
 var finalSect = document.querySelector("#finalpage");
 
-// create 2 divs for text and question section
-var questionNum = document.createElement("div");
-var answerBlock = document.createElement("div");
-answerBlock.className = ("answerBlock"); 
-
-// create h1 - question text
-var questionText = document.createElement("h1");
-questionText.textContent = " This is a placeholder for question #1."
-
-// create 2 div for answer block
-// create choice div
-var multiChoice = document.createElement("div");
-multiChoice.className = ("questionActual");
-// create response div
-var answerResp = document.createElement("div");
-answerResp.className = ("answerResp");
-
-// create buttons for choice
-var choiceA = document.createElement("button");
-choiceA.className = ("choiceA");
-choiceA.textContent = ("Option A");
-
-var choiceB = document.createElement("button");
-choiceB.className = ("choiceB");
-choiceB.textContent = ("Option B");
-
-var choiceC = document.createElement("button");
-choiceC.className = ("choiceC");
-choiceC.textContent = ("Option C");
-
-var choiceD = document.createElement("button");
-choiceD.className = ("choiceD");
-choiceD.textContent = ("Option D");
-
-// create response p
-var corrIncNote = document.createElement("p");
-corrIncNote.textContent= ("Answer!");
 
 // Final page elements
 // Section creation
@@ -69,7 +32,7 @@ doneBlock.className=("doneBlock");
 var doneMsgBlock = document.createElement("div");
 var doneMsg = document.createElement("h1");
 doneMsg.className =("doneMsg");
-console.log(doneMsg);
+
 // score message div and h1
 var scoreBlock=document.createElement("div");
 var scoreMsg = document.createElement("h1");
@@ -154,9 +117,28 @@ startBtn.addEventListener("click", function (){
     }, 1000);
 
 });
-
+ var numberCorrect =0;
+ var numberIncorrect =0;
 // function to click high score box - prompt to call the saved data in alert or prompt
-
+function buttonCheck (){
+    console.log(this.textContent);
+    if (this.textContent === questionsArr[questionTracking].correctAnswer){
+        console.log("correct answer");
+        numberCorrect += 20;
+        console.log(numberCorrect);
+        correctIncNote.innerHTML= "Correct!"
+    } else {
+        console.log("incorrect answer")
+        numberIncorrect ++;
+        correctIncNote.innerHTML = "Incorrect!"
+    }
+    questionTracking += 1
+    if (questionTracking<= 4){
+        questionCreation();
+    } else {
+        finalPage();
+    }
+}
 
 // QUESTION Create Block
 var questionIndex = [];
@@ -172,17 +154,17 @@ var questionsArr = [
     {
         question: "Question#2?",
         answers: ["e", "f", "g", "h"],
-        correctAnswer: "b" 
+        correctAnswer: "e" 
     },
     {
         question: "Question#3?",
         answers: ["i", "j", "k", "l"],
-        correctAnswer: "c" 
+        correctAnswer: "i" 
     },
     {
         question: "Question#4?",
         answers: ["m", "n", "o", "p"],
-        correctAnswer: "d" 
+        correctAnswer: "m" 
     },
     {
         question: "Question#5?",
@@ -191,45 +173,84 @@ var questionsArr = [
     },
 ];
 
-// function for answering correct
-//  add point to score, give a correct propmpt, chime sound (if possible)
-// move to next question (function for each question?)
-
-// function for answering incorrect
-//  gong sound ( if possible), incorrect prompt, move to next question, subtract time from timer
 
 
 // question #1
 // select the section
 // add data attribute to question
 
-startBtn.addEventListener("click", function (){
+startBtn.addEventListener("click", questionCreation)
+
     function questionCreation(){
 
-        backgroundClear();
-    
-        // append first 2 divs
-        questionSect.appendChild(questionNum);
-        questionSect.appendChild(answerBlock);
+    backgroundClear();
 
-        // append h1 into question div
-        questionNum.appendChild(questionText);
-    
-        // append answer and response to block
-        answerBlock.appendChild(multiChoice);
-        answerBlock.appendChild(answerResp);
+    document.getElementById("question").innerHTML=""
+    // QUESTION BLOCK ELEMENTS
+    // create 2 divs for text and question section
+    var questionNum = document.createElement("div");
+    var answerBlock = document.createElement("div");
+    answerBlock.className = ("answerBlock"); 
 
-        // append choices under multichoice div
-        multiChoice.appendChild(choiceA);
-        multiChoice.appendChild(choiceB);
-        multiChoice.appendChild(choiceC);
-        multiChoice.appendChild(choiceD);
+    // create h1 - question text
+    var questionText = document.createElement("h1");
+    questionText.textContent = questionsArr[questionTracking].question;
 
-        // append response p
-        answerResp.appendChild(corrIncNote);
-    };
-    questionCreation()
-})
+    // create 2 div for answer block
+    // create choice div
+    var multiChoice = document.createElement("div");
+    multiChoice.className = ("questionActual");
+    // create response div
+    var answerResp = document.createElement("div");
+    answerResp.className = ("answerResp");
+
+    // create buttons for choice
+    var choiceA = document.createElement("button");
+    choiceA.className = ("choiceA");
+    choiceA.textContent = questionsArr[questionTracking].answers[0];
+
+    var choiceB = document.createElement("button");
+    choiceB.className = ("choiceB");
+    choiceB.textContent = questionsArr[questionTracking].answers[1];
+
+    var choiceC = document.createElement("button");
+    choiceC.className = ("choiceC");
+    choiceC.textContent = questionsArr[questionTracking].answers[2];
+
+    var choiceD = document.createElement("button");
+    choiceD.className = ("choiceD");
+    choiceD.textContent = questionsArr[questionTracking].answers[3];
+
+    // create response p
+    var corrIncNote = document.createElement("p");
+    corrIncNote.textContent= ("Answer!");
+
+    // append first 2 divs
+    questionSect.appendChild(questionNum);
+    questionSect.appendChild(answerBlock);
+
+    // append h1 into question div
+    questionNum.appendChild(questionText);
+
+    // append answer and response to block
+    answerBlock.appendChild(multiChoice);
+    answerBlock.appendChild(answerResp);
+
+    // append choices under multichoice div
+    multiChoice.appendChild(choiceA);
+    multiChoice.appendChild(choiceB);
+    multiChoice.appendChild(choiceC);
+    multiChoice.appendChild(choiceD);
+    document.querySelector(".choiceA").addEventListener("click", buttonCheck)
+    document.querySelector(".choiceB").addEventListener("click", buttonCheck)
+    document.querySelector(".choiceC").addEventListener("click", buttonCheck)
+    document.querySelector(".choiceD").addEventListener("click", buttonCheck)
+
+    // append response p
+    answerResp.appendChild(corrIncNote);
+
+};
+
 
 // create final page
 
@@ -251,7 +272,7 @@ function finalPage(){
         doneMsg.className =("doneMsg");
         doneMsgBlock.append(doneMsg);
         // div2
-        scoreMsg.textContent= "Final Score is 'Placholder for final'";
+        scoreMsg.textContent= "Final Score is " + numberCorrect;
         // scoreMsg.className = ("scoreMsg");
         scoreBlock.appendChild(scoreMsg);
         // div 3
@@ -286,7 +307,6 @@ submitFinal.addEventListener("click", function (){
 
         // append h1 into highscoremsg
         highScore.textContent="HIGH SCORES";
-        highScoreMsg.appendChild(highScore);
 
         // append li score list into highScoreList
         highScores.textContent= [1, 2, 3, 4, 5];
@@ -308,20 +328,23 @@ goBackBtn.addEventListener("click", function (){
 
 // *** Need to do ***
 // function to show correct/worn element - can it make a sound? how do i track answers? Assign correct true values to data (element.getAttribute(some data id from array?)) attribute?
+// add point if correct with ding and box, no point if incorrect with gong, box, and time deduction
+// separate function from queston?
 // function to attach data attribute to questions - fill in array
 // function to add initals, save (saveTasks), and track high score
 // funtion for "view high score button"
 // function for clear high scores
 // funtion to attach pull scores back in?
+// general styling
 
 // possible saved score function
-var savedScores = function(){
-    localStorage.setItem("scores", JSON.stringify(tasks));
+var saveScores = function(){
+    localStorage.setItem("numberCorrect", JSON.stringify("numberCorrect"));
 };
-
+console.log(localStorage);
 // possible load score function
 var loadScores = function(){
-    var savedScores = localStorage.getItem("scores");
+    var savedScores = localStorage.getItem("numberCorrect");
     if (savedScores === null){
         var savedScores = [];
         return false;
