@@ -5,8 +5,8 @@ var mainPage = document.querySelector("#landing");
 var timeLeft = 5;
 var timedInterval;
 var startBtn = document.querySelector("#goButton");
-var corrIncNote = document.createElement("button");
-corrIncNote.innerHTML = ""
+var corrNote = document.createElement("button");
+corrNote.innerHTML = ""
 
 var questionTracking = 0;
 
@@ -97,28 +97,30 @@ function finalPageClear(){
 
 
 // timerClock.textContent = (countdown());
-startBtn.addEventListener("click", function (){
+// startBtn.addEventListener("click", function (){
     
-    timedInterval = setInterval(function (){
-        if (timeLeft > 1 ){
-            timerClock.innerHTML = timeLeft + " seconds remaining ";
-        } else if (timeLeft === 1) {
-            timerClock.innerHTML = timeLeft + " second remaining ";
-        } else {
-            // go to final page
-            console.log('hit')
-            timerClock.innerHTML = "";
-            // alert("Times Up!")
-            clearInterval(timedInterval);
-            // return
-            finalPage()
-        };
-        timeLeft --;
-    }, 1000);
+//     timedInterval = setInterval(function (){
+//         if (timeLeft > 1 ){
+//             timerClock.innerHTML = timeLeft + " seconds remaining ";
+//         } else if (timeLeft === 1) {
+//             timerClock.innerHTML = timeLeft + " second remaining ";
+//         } else {
+//             // go to final page
+//             // console.log('hit')
+//             timerClock.innerHTML = "";
+//             // alert("Times Up!")
+//             clearInterval(timedInterval);
+//             // return
+//             finalPage()
+//         };
+//         timeLeft --;
+//     }, 1000);
 
-});
+// });
  var numberCorrect =0;
  var numberIncorrect =0;
+//  var corrNote = document.createElement("p");
+
 // function to click high score box - prompt to call the saved data in alert or prompt
 function buttonCheck (){
     console.log(this.textContent);
@@ -126,22 +128,23 @@ function buttonCheck (){
         console.log("correct answer");
         numberCorrect += 20;
         console.log(numberCorrect);
-        correctIncNote.innerHTML= "Correct!"
+        corrNote.textContent= "Correct!";
     } else {
         console.log("incorrect answer")
         numberIncorrect ++;
-        correctIncNote.innerHTML = "Incorrect!"
+        corrNote.textContent= "Incorrect!";
     }
     questionTracking += 1
     if (questionTracking<= 4){
         questionCreation();
     } else {
+        // saveScores();
         finalPage();
     }
 }
 
 // QUESTION Create Block
-var questionIndex = [];
+// var questionIndex = [];
 
 // questionsArr[questionIndex]
 
@@ -181,7 +184,7 @@ var questionsArr = [
 
 startBtn.addEventListener("click", questionCreation)
 
-    function questionCreation(){
+function questionCreation(){
 
     backgroundClear();
 
@@ -222,8 +225,8 @@ startBtn.addEventListener("click", questionCreation)
     choiceD.textContent = questionsArr[questionTracking].answers[3];
 
     // create response p
-    var corrIncNote = document.createElement("p");
-    corrIncNote.textContent= ("Answer!");
+    var corrNote = document.createElement("p");
+    corrNote.textContent= ("WTF");
 
     // append first 2 divs
     questionSect.appendChild(questionNum);
@@ -247,7 +250,7 @@ startBtn.addEventListener("click", questionCreation)
     document.querySelector(".choiceD").addEventListener("click", buttonCheck)
 
     // append response p
-    answerResp.appendChild(corrIncNote);
+    answerResp.appendChild(corrNote);
 
 };
 
@@ -286,9 +289,13 @@ function finalPage(){
         // submitFinal.className = "submitBtn"
         submitFinal.innerHTML=("Save");
         scoreSub.appendChild(submitFinal);
+
     };
     createFinal();
+
+    submitFinal.addEventListener("click", saveScores);
 };
+
 
 // create high score page
 submitFinal.addEventListener("click", function (){
@@ -339,7 +346,7 @@ goBackBtn.addEventListener("click", function (){
 
 // possible saved score function
 var saveScores = function(){
-    localStorage.setItem("numberCorrect", JSON.stringify("numberCorrect"));
+    localStorage.setItem(numberCorrect, JSON.stringify("scores"));
 };
 console.log(localStorage);
 // possible load score function
