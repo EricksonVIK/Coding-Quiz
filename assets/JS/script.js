@@ -1,4 +1,15 @@
 // Variables
+
+// View high scores
+
+// submitFinal.addEventListener("click", saveScores)
+var highScoreBtn = document.querySelector("#highScoreBtn");
+highScoreBtn.addEventListener("click", loadScores);
+
+function displayScores (){
+    loadScores();
+}
+
 // main page
 var mainPage = document.querySelector("#landing");
 
@@ -294,39 +305,43 @@ function finalPage(){
     createFinal();
 
     submitFinal.addEventListener("click", saveScores);
+
 };
 
+function createSubPage(){
+    backgroundClear();
+    questionClear();
+    finalPageClear();
 
+    // append Parent div highScoreBlock
+    scorePageFinal.appendChild(highScoreBlock);
+
+    // append the 3 divs into parent block
+    highScoreBlock.appendChild(highScoreMsg);
+    highScoreBlock.appendChild(highScoreList);
+    highScoreBlock.appendChild(highScoreBtn);
+
+    // append h1 into highscoremsg
+    highScore.textContent="HIGH SCORES";
+
+    // append li score list into highScoreList
+    highScores.textContent= [1, 2, 3, 4, 5];
+    highScoreList.appendChild(highScores);
+
+    // append the buttons into highScoreBtn
+    goBackBtn.textContent ="GoBack";
+    highScoreBtn.appendChild(goBackBtn);
+    clearScoreBtn.textContent = "Clear High Scores";
+    highScoreBtn.appendChild(clearScoreBtn);
+}
+
+clearScoreBtn.addEventListener("click", clearData);
+
+function clearData() {
+    window.localStorage.clear();
+}
 // create high score page
-submitFinal.addEventListener("click", function (){
-    function createSubPage(){
-        backgroundClear();
-        questionClear();
-        finalPageClear();
-
-        // append Parent div highScoreBlock
-        scorePageFinal.appendChild(highScoreBlock);
-
-        // append the 3 divs into parent block
-        highScoreBlock.appendChild(highScoreMsg);
-        highScoreBlock.appendChild(highScoreList);
-        highScoreBlock.appendChild(highScoreBtn);
-
-        // append h1 into highscoremsg
-        highScore.textContent="HIGH SCORES";
-
-        // append li score list into highScoreList
-        highScores.textContent= [1, 2, 3, 4, 5];
-        highScoreList.appendChild(highScores);
-
-        // append the buttons into highScoreBtn
-        goBackBtn.textContent ="GoBack";
-        highScoreBtn.appendChild(goBackBtn);
-        clearScoreBtn.textContent = "Clear High Scores";
-        highScoreBtn.appendChild(clearScoreBtn);
-    }
-    createSubPage();
-});
+submitFinal.addEventListener("click", createSubPage);
 
 // reload page function/start over
 goBackBtn.addEventListener("click", function (){
@@ -346,12 +361,19 @@ goBackBtn.addEventListener("click", function (){
 
 // possible saved score function
 var saveScores = function(){
-    localStorage.setItem(numberCorrect, JSON.stringify("scores"));
+
+    var answersArr = JSON.parse(localStorage.getItem('scores')) || [];
+
+    answersArr.push({
+        name: scoreInp.value,
+        score: numberCorrect
+    });
+
+    localStorage.setItem("scores", JSON.stringify(answersArr));
 };
-console.log(localStorage);
 // possible load score function
 var loadScores = function(){
-    var savedScores = localStorage.getItem("numberCorrect");
+    var savedScores = localStorage.getItem("scores");
     if (savedScores === null){
         var savedScores = [];
         return false;
