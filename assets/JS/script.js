@@ -22,8 +22,8 @@ var mainPage = document.querySelector("#landing");
 var timeLeft = 100;
 var timedInterval;
 var startBtn = document.querySelector("#goButton");
-var corrNote = document.createElement("button");
-corrNote.innerHTML = ""
+// var corrNote = document.createElement("button");
+// corrNote.innerHTML = ""
 
 var questionTracking = 0;
 
@@ -67,7 +67,20 @@ var choiceC = document.createElement("button");
 choiceC.className = ("choiceC");
 var choiceD = document.createElement("button");
 choiceD.className = ("choiceD");
+// create response p for question
+var corrNote = document.createElement("p");
+corrNote.className=("response");
+console.log("response");
+// document.querySelector(".response")
+//         .addEventListener(corrResponse);
+//         {
+//   document.getElementById("welcome").hidden = true;
+//   document.getElementById("awesome").hidden = false;
+// }, false);
 
+function corrResponse (){
+    document.querySelector(".response").hidden = false
+}
 
 // Final page elements
 // Section creation
@@ -122,10 +135,6 @@ var goBackBtn = document.createElement("button");
 goBackBtn.className = ("BackBtn");
 var clearScoreBtn = document.createElement("button")
 
-// create response p for question
-var corrNote = document.createElement("p");
-// corrNote.textContent= ("Correct!");
-// corrNote.style.visibility="hidden";
 
 
 
@@ -170,9 +179,14 @@ startBtn.addEventListener("click", function (){
 });
  var numberCorrect =0;
  var numberIncorrect =0;
-//  var corrNote = document.createElement("p");
 var buzz = new Audio("./assets/sounds/zapsplat_multimedia_game_show_buzzer_002_27374.mp3");
 var ding = new Audio("./assets/sounds/zapsplat_multimedia_correct_ping_tone_001_68778.mp3")
+
+function corrResponse (){
+    document.querySelector(".response").hidden = true;
+    // document.querySelector(".response").style.visibilty = "visible";
+}
+
 // function to click high score box - prompt to call the saved data in alert or prompt
 function buttonCheck (){
     console.log(this.textContent);
@@ -180,10 +194,13 @@ function buttonCheck (){
         numberCorrect += 20;
         ding.play();
         console.log(numberCorrect);
-        corrNote.style.visibility="visible";
+        corrResponse();
+        // corrNote.style.visibility="visible";
+        // corrNote.innerHTML="Correct!";
     } else {
         numberIncorrect ++;
         buzz.play();
+        // subtract 5 seconds for incorrect answer
         timeLeft = timeLeft -= 5;
         console.log(timeLeft)
     }
@@ -259,8 +276,7 @@ function questionCreation(){
     choiceD.textContent = questionsArr[questionTracking].answers[3];
 
     // create response p -- put outside of the function for buttonCheck to see
-    corrNote.innerHTML= "Response";
-    corrNote.style.visibility="hidden";
+    // corrNote.style.visibility="hidden";
 
     // append first 2 divs
     questionSect.appendChild(questionNum);
@@ -285,6 +301,12 @@ function questionCreation(){
 
     // append response p
     answerResp.appendChild(corrNote);
+
+    document.querySelector(".response").textContent=("correct");
+    // document.querySelector(".response").hidden=true;
+    // document.querySelector(".response").style.visibility="hidden";
+    
+    
 
 };
 
