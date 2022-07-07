@@ -130,3 +130,7 @@ header div p{
     border: solid 5px var(---primaryborder);
 }
 
+.highscorelist {
+    color: black;
+    font-size: 16px;
+}
