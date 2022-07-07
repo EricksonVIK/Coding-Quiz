@@ -10,7 +10,7 @@ var endScore = JSON.parse(localStorage.getItem("scores")) || [];
 // main page
 var mainPage = document.querySelector("#landing");
 
-var timeLeft = 10;
+var timeLeft = 30;
 var timedInterval;
 var startBtn = document.querySelector("#goButton");
 // var corrNote = document.createElement("button");
@@ -62,9 +62,6 @@ choiceD.className = ("choiceD");
 var corrNote = document.createElement("p");
 corrNote.className=("response");
 
-// function corrResponse (){
-//     document.querySelector(".response").hidden = false
-// }
 
 // Final page elements
 // Section creation
@@ -153,7 +150,7 @@ startBtn.addEventListener("click", function (){
             // go to final page
             // console.log('hit')
             timerClock.innerHTML = "";
-            // alert("Times Up!")
+            alert("Times Up!")
             clearInterval(timedInterval);
             // return
             finalPage()
@@ -164,7 +161,7 @@ startBtn.addEventListener("click", function (){
 });
 var numberCorrect =0;
 var numberIncorrect =0;
-//  var finalScore=(numberCorrect+timeLeft);
+ var finalScore=0;
 var buzz = new Audio("./assets/sounds/zapsplat_multimedia_game_show_buzzer_002_27374.mp3");
 var ding = new Audio("./assets/sounds/zapsplat_multimedia_correct_ping_tone_001_68778.mp3")
 
@@ -183,7 +180,7 @@ function buttonCheck (){
     if (this.textContent === questionsArr[questionTracking].correctAnswer){
         numberCorrect += 10;
         ding.play();
-        console.log(numberCorrect);
+        // console.log(numberCorrect);
         // var correctResponse = document.createElement("p");
         // correctResponse.textContent=("Correct!")
         // answerResp.appenChild(correctResponse);
@@ -193,7 +190,7 @@ function buttonCheck (){
         buzz.play();
         // subtract 5 seconds for incorrect answer
         timeLeft = timeLeft -= 5;
-        console.log(timeLeft)
+        // console.log(timeLeft)
         document.querySelector(".response").textContent="Incorrect!"
 
     }
@@ -204,7 +201,8 @@ function buttonCheck (){
         // saveScores();
         finalPage();
     }
-    // var finalScore= (numberCorrect+timeLeft);
+    var finalScore= (numberCorrect+timeLeft);
+    console.log("this is finalScore", finalScore);
 }
 
 // QUESTION Create Block
@@ -223,24 +221,24 @@ var questionsArr = [
         correctAnswer: "True or False" 
     },
     {
-        question: "Question#2?",
-        answers: ["e", "f", "g", "h"],
-        correctAnswer: "e" 
+        question: "How do you create a comment in code?",
+        answers: ["CTRL+D", "{}", "$$", "CTRL+/"],
+        correctAnswer: "CTRL+/" 
     },
     {
-        question: "Question#3?",
-        answers: ["i", "j", "k", "l"],
-        correctAnswer: "i" 
+        question: "In Visual Studio, CTR + J will ____?",
+        answers: ["Open Editor", "Close Editor", "Open a Terminal", "Switch File Screens"],
+        correctAnswer: "Open a Terminal" 
     },
     {
-        question: "Question#4?",
-        answers: ["m", "n", "o", "p"],
-        correctAnswer: "m" 
+        question: "How do you create a folder with git?",
+        answers: ["ls", "git branch", "touch", "mkdir"],
+        correctAnswer: "mkdir" 
     },
     {
-        question: "Question#5?",
-        answers: ["q", "r", "s", "t"],
-        correctAnswer: "a" 
+        question: "Which one below is not an example of a comparison operator?",
+        answers: ["!=", "||", ">", "==="],
+        correctAnswer: "||" 
     },
 ];
 
@@ -345,12 +343,22 @@ function finalPage(){
     submitFinal.addEventListener("click", saveScores);
 
 };
+// attempting to add the alert for high score
+// if (finalScore.score > endScore.score){
+//     localStorage.setItem("highscore", score.score);
+//     localStorage.setItem("name", score.name);
+//     alert(score.name + " now has a new high score " + score.name + " ! ");
+// };
 
 function createScorePage(){
     backgroundClear();
     questionClear();
     finalPageClear();
-
+    // if (finalScore.score > endScore.score){
+    //     localStorage.setItem("highscore", score.score);
+    //     localStorage.setItem("name", score.name);
+    //     alert(score.name + " now has a new high score " + score.name + " ! ");
+    // };
     // append Parent div highScoreBlock
     scorePageFinal.appendChild(highScoreBlock);
 
@@ -405,7 +413,6 @@ var loadScores = function(){
     }
 };
 
-// highScores.textContent=endScore.map(scores=>{return `<li class="highscore"> ${scores.name}></li>`}).join("")
 
 
 // retrieve and create high score list from local storage
@@ -418,7 +425,7 @@ function displayHighScores(){
     });
     endScores.forEach(function(score){
         var scoreList=document.createElement("li");
-        scoreList.textContent=score.name + "---" + score.score;
+        scoreList.innerHTML=score.name + "  ---  " + score.score;
 
         highScoreList.appendChild(scoreList);
     });
