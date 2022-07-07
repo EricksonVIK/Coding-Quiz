@@ -1,7 +1,6 @@
 // Variables
 
 // View high scores
-// submitFinal.addEventListener("click", saveScores)
 var highScoreBtn = document.querySelector("#highScoreBtn");
 highScoreBtn.addEventListener("click", displayHighScores);
 
@@ -19,7 +18,7 @@ var endScore = JSON.parse(localStorage.getItem("scores")) || [];
 // main page
 var mainPage = document.querySelector("#landing");
 
-var timeLeft = 100;
+var timeLeft = 10;
 var timedInterval;
 var startBtn = document.querySelector("#goButton");
 // var corrNote = document.createElement("button");
@@ -70,17 +69,10 @@ choiceD.className = ("choiceD");
 // create response p for question
 var corrNote = document.createElement("p");
 corrNote.className=("response");
-console.log("response");
-// document.querySelector(".response")
-//         .addEventListener(corrResponse);
-//         {
-//   document.getElementById("welcome").hidden = true;
-//   document.getElementById("awesome").hidden = false;
-// }, false);
 
-function corrResponse (){
-    document.querySelector(".response").hidden = false
-}
+// function corrResponse (){
+//     document.querySelector(".response").hidden = false
+// }
 
 // Final page elements
 // Section creation
@@ -119,14 +111,15 @@ var highScoreMsg = document.createElement("div");
 highScoreMsg.className = ("highscoremsg")
 var highScoreList = document.createElement("div");
 highScoreList.className = ("highscorelist")
-var highScoreBtn = document.createElement("div");
-highScoreBtn.className = ("highscorebtn");
+var highScoreBtns = document.createElement("div");
+highScoreBtns.className = ("highScoreBtns");
 
 // Create message hi
 var highScore = document.createElement("h1");
 highScore.className = ("highscore")
 
 // Create Div (placeholder for high score recall) - Check taskmaster for code
+// may be able to delete this dom with new foreach loop
 var highScores = document.createElement ("li");
 highScores.className = ("highscores")
 
@@ -179,32 +172,38 @@ startBtn.addEventListener("click", function (){
 });
 var numberCorrect =0;
 var numberIncorrect =0;
- var finalScore=0;
+//  var finalScore=(numberCorrect+timeLeft);
 var buzz = new Audio("./assets/sounds/zapsplat_multimedia_game_show_buzzer_002_27374.mp3");
 var ding = new Audio("./assets/sounds/zapsplat_multimedia_correct_ping_tone_001_68778.mp3")
 
 // var correctRes = document.(".response").textContent=("Correct!");
 // var incorrectRes = document.querySelector(".response").textContent=("Incorrect!");
 
-function corrResponse (){
-    // document.querySelector(".response").hidden = false;
-    // document.querySelector(".response").style.visibilty = "visible";
-    document.querySelector(".response").innerHTML =("Correct");
-};
+// function corrResponse (){
+//     // document.querySelector(".response").hidden = false;
+//     // document.querySelector(".response").style.visibilty = "visible";
+//     document.querySelector(".response").innerHTML =("Correct");
+// };
 
 // function to click high score box - prompt to call the saved data in alert or prompt
 function buttonCheck (){
     console.log(this.textContent);
     if (this.textContent === questionsArr[questionTracking].correctAnswer){
-        numberCorrect += 20;
+        numberCorrect += 10;
         ding.play();
         console.log(numberCorrect);
+        // var correctResponse = document.createElement("p");
+        // correctResponse.textContent=("Correct!")
+        // answerResp.appenChild(correctResponse);
+        document.querySelector(".response").textContent="Correct!"
     } else {
         numberIncorrect ++;
         buzz.play();
         // subtract 5 seconds for incorrect answer
         timeLeft = timeLeft -= 5;
         console.log(timeLeft)
+        document.querySelector(".response").textContent="Incorrect!"
+
     }
     questionTracking += 1
     if (questionTracking<= 4){
@@ -214,7 +213,6 @@ function buttonCheck (){
         finalPage();
     }
     var finalScore= (numberCorrect+timeLeft);
-    console.log(finalScore);
 }
 
 // QUESTION Create Block
@@ -262,6 +260,7 @@ function questionCreation(){
 
     backgroundClear();
 
+
     document.getElementById("question").innerHTML=""
 
     //create h1 - question text
@@ -306,14 +305,6 @@ function questionCreation(){
 
 };
 
-// function myFunction() {
-//     var x = document.getElementById("myDIV");
-//     if (x.innerHTML === "Hello") {
-//       x.innerHTML = "Swapped text!";
-//     } else {
-//       x.innerHTML = "Hello";
-//     }
-//   }
 // create final page
 
 function finalPage(){
@@ -322,6 +313,7 @@ function finalPage(){
     // question section clear
     questionClear();
     // check if clearing the parenthesis removes timer
+    document.getElementById("timer").display="none";
     clearInterval(timedInterval);
     function createFinal(){
         // append section
@@ -336,7 +328,7 @@ function finalPage(){
         doneMsg.className =("doneMsg");
         doneMsgBlock.append(doneMsg);
         // div2
-        scoreMsg.textContent= "Final Score is " + timeLeft;
+        scoreMsg.textContent= "Final Score is " + (numberCorrect+timeLeft);
         // scoreMsg.className = ("scoreMsg");
         scoreBlock.appendChild(scoreMsg);
         // div 3
@@ -369,7 +361,7 @@ function createScorePage(){
     // append the 3 divs into parent block
     highScoreBlock.appendChild(highScoreMsg);
     highScoreBlock.appendChild(highScoreList);
-    highScoreBlock.appendChild(highScoreBtn);
+    highScoreBlock.appendChild(highScoreBtns);
 
     // append h1 into highscoremsg
     highScore.textContent="HIGH SCORES";
@@ -379,11 +371,11 @@ function createScorePage(){
     // highScores.textContent=  return `${scores.name}`;
     // highScoreList.appendChild(highScores);
 
-    // append the buttons into highScoreBtn
+    // append the buttons into highScoreBtns
     goBackBtn.textContent ="GoBack";
-    highScoreBtn.appendChild(goBackBtn);
+    highScoreBtns.appendChild(goBackBtn);
     clearScoreBtn.textContent = "Clear High Scores";
-    highScoreBtn.appendChild(clearScoreBtn);
+    highScoreBtns.appendChild(clearScoreBtn);
 }
 
 // clears local storage
@@ -431,12 +423,6 @@ var loadScores = function(){
 
 // highScores.textContent=endScore.map(scores=>{return `<li class="highscore"> ${scores.name}></li>`}).join("")
 
-// console logs
-console.log("this is my highScores", highScores)
-console.log("this is my", highScore)
-console.log("this is my scores", scores)
-console.log("this is my ", score)
-console.log("this is my", saveScores)
 
 // retrieve and create high score list from local storage
 function displayHighScores(){
@@ -448,7 +434,7 @@ function displayHighScores(){
     });
     endScores.forEach(function(score){
         var scoreList=document.createElement("li");
-        scoreList.textContent=score.name + "-" + score.score;
+        scoreList.textContent=score.name + "---" + score.score;
 
         highScoreList.appendChild(scoreList);
     });
