@@ -383,13 +383,6 @@ goBackBtn.addEventListener("click", function (){
     location.reload();
 });
 
-// *** Need to do ***
-// function to show correct/worn element - can it make a sound? how do i track answers? Assign correct true values to data (element.getAttribute(some data id from array?)) attribute?
-// add point if correct with ding and box, no point if incorrect with gong, box, and time deduction
-// function to add initals, save (saveTasks), and track high score
-// funtion for "view high score button"
-    // need to figure out how to display values only
-// general styling
 
 // possible saved score function
 var saveScores = function(){
