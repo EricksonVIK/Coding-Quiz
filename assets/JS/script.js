@@ -6,14 +6,6 @@ highScoreBtn.addEventListener("click", displayHighScores);
 
 var endScore = JSON.parse(localStorage.getItem("scores")) || [];
 
-// highScores.textContent=endScore.map(scores=>{return `<li class="highscore"> ${scores.name}></li>`}).join("")
-// function displayScores (){
-//     // var endScore = JSON.parse(localStorage.getItem("scores")) || [];
-//     // return endScore;
-//     return localStorage.getItem("scores");
-//     // return scores.name;
-//     // console.log(displayScores);
-// };
 
 // main page
 var mainPage = document.querySelector("#landing");
@@ -120,8 +112,8 @@ highScore.className = ("highscore")
 
 // Create Div (placeholder for high score recall) - Check taskmaster for code
 // may be able to delete this dom with new foreach loop
-var highScores = document.createElement ("li");
-highScores.className = ("highscores")
+// var highScores = document.createElement ("li");
+// highScores.className = ("highscores")
 
 // create 2 buttons - go back - clear high score
 var goBackBtn = document.createElement("button");
@@ -212,7 +204,7 @@ function buttonCheck (){
         // saveScores();
         finalPage();
     }
-    var finalScore= (numberCorrect+timeLeft);
+    // var finalScore= (numberCorrect+timeLeft);
 }
 
 // QUESTION Create Block
@@ -222,9 +214,13 @@ function buttonCheck (){
 
 var questionsArr = [
     {
-        question: "Question#1?",
-        answers: ["a", "b", "c", "d"],
-        correctAnswer: "a" 
+        question: "Boolean Data is a ______ type of data?",
+        answers: [
+            "True or False", 
+            "Undefined", 
+            "Textual Data", 
+            "None of the Above"],
+        correctAnswer: "True or False" 
     },
     {
         question: "Question#2?",
@@ -345,7 +341,7 @@ function finalPage(){
 
     };
     createFinal();
-
+    document.querySelector("#timer").visibility="hidden"
     submitFinal.addEventListener("click", saveScores);
 
 };
@@ -365,11 +361,6 @@ function createScorePage(){
 
     // append h1 into highscoremsg
     highScore.textContent="HIGH SCORES";
-
-    // append li score list into highScoreList
-    // highScores.textContent= displayScores();
-    // highScores.textContent=  return `${scores.name}`;
-    // highScoreList.appendChild(highScores);
 
     // append the buttons into highScoreBtns
     goBackBtn.textContent ="GoBack";
