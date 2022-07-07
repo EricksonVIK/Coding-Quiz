@@ -1,12 +1,22 @@
 // Variables
+
+// View high scores
+var highScoreBtn = document.querySelector("#highScoreBtn");
+highScoreBtn.addEventListener("click", displayHighScores);
+
+var endScore = JSON.parse(localStorage.getItem("scores")) || [];
+
+
 // main page
 var mainPage = document.querySelector("#landing");
 
-var timeLeft = 5;
+var timeLeft = 10;
 var timedInterval;
 var startBtn = document.querySelector("#goButton");
-var corrIncNote = document.createElement("button");
-corrIncNote.innerHTML = "Answer!"
+// var corrNote = document.createElement("button");
+// corrNote.innerHTML = ""
+
+var questionTracking = 0;
 
 // selecting timer parent "div"
 var timerDiv = document.getElementById("timer");
@@ -16,12 +26,11 @@ var timerClock = document.createElement("p");
 timerDiv.appendChild(timerClock);
 
 // timerDiv.appendChild(timerClock);
-
-// qUESTION BLOCK ELEMENTS
 // aiming on sections
 var questionSect = document.querySelector("#question");
 var finalSect = document.querySelector("#finalpage");
 
+// QUESTION BLOCK ELEMENTS
 // create 2 divs for text and question section
 var questionNum = document.createElement("div");
 var answerBlock = document.createElement("div");
@@ -29,7 +38,6 @@ answerBlock.className = ("answerBlock");
 
 // create h1 - question text
 var questionText = document.createElement("h1");
-questionText.textContent = " This is a placeholder for question #1."
 
 // create 2 div for answer block
 // create choice div
@@ -42,46 +50,81 @@ answerResp.className = ("answerResp");
 // create buttons for choice
 var choiceA = document.createElement("button");
 choiceA.className = ("choiceA");
-choiceA.textContent = ("Option A");
-
 var choiceB = document.createElement("button");
 choiceB.className = ("choiceB");
-choiceB.textContent = ("Option B");
-
+var choiceB = document.createElement("button");
+choiceB.className = ("choiceB");
 var choiceC = document.createElement("button");
 choiceC.className = ("choiceC");
-choiceC.textContent = ("Option C");
-
 var choiceD = document.createElement("button");
 choiceD.className = ("choiceD");
-choiceD.textContent = ("Option D");
+// create response p for question
+var corrNote = document.createElement("p");
+corrNote.className=("response");
 
-// create response p
-var corrIncNote = document.createElement("p");
-corrIncNote.textContent= ("Answer!");
+// function corrResponse (){
+//     document.querySelector(".response").hidden = false
+// }
 
 // Final page elements
 // Section creation
 var doneBlock = document.createElement("section");
+doneBlock.className=("doneBlock");
 
 // done message div and h1
 var doneMsgBlock = document.createElement("div");
 var doneMsg = document.createElement("h1");
+doneMsg.className =("doneMsg");
 
 // score message div and h1
 var scoreBlock=document.createElement("div");
 var scoreMsg = document.createElement("h1");
+scoreMsg.className = ("scoreMsg");
 
 // final submit div with input and save button
 var scoreSub = document.createElement("div");
 var scoreInp =  document.createElement("input");
 var submitFinal = document.createElement("button"); 
 var initialP = document.createElement("p");      
+scoreSub.className=("scoresave");
+initialP.className=("initials");
+scoreInp.className = ("scoreInp");
+submitFinal.className = "submitBtn";
+
+// high score page dom's
+var scorePageFinal = document.querySelector("#scorepage");
+
+// Create scorepage div
+var highScoreBlock = document.createElement("div");
+highScoreBlock.className = ("highscoreblock")
+
+// Create highscoreblock divs x 3
+var highScoreMsg = document.createElement("div");
+highScoreMsg.className = ("highscoremsg")
+var highScoreList = document.createElement("div");
+highScoreList.className = ("highscorelist")
+var highScoreBtns = document.createElement("div");
+highScoreBtns.className = ("highScoreBtns");
+
+// Create message hi
+var highScore = document.createElement("h1");
+highScore.className = ("highscore")
+
+// Create Div (placeholder for high score recall) - Check taskmaster for code
+// may be able to delete this dom with new foreach loop
+// var highScores = document.createElement ("li");
+// highScores.className = ("highscores")
+
+// create 2 buttons - go back - clear high score
+var goBackBtn = document.createElement("button");
+goBackBtn.className = ("BackBtn");
+var clearScoreBtn = document.createElement("button")
 
 
-// make landing page disapear
+
+
 function backgroundClear(){
-    mainPage.style.height = "10px";
+    mainPage.style.height = "1px";
     mainPage.style.visibility="hidden";
 };
 
@@ -89,6 +132,13 @@ function questionClear(){
     questionSect.style.height = "1px";
     questionSect.style.visibility="hidden";
 };
+
+function finalPageClear(){
+    finalSect.style.height = "1px";
+    finalSect.style.visibility ="hidden";
+}
+
+
 
 
 // timerClock.textContent = (countdown());
@@ -101,7 +151,7 @@ startBtn.addEventListener("click", function (){
             timerClock.innerHTML = timeLeft + " second remaining ";
         } else {
             // go to final page
-            console.log('hit')
+            // console.log('hit')
             timerClock.innerHTML = "";
             // alert("Times Up!")
             clearInterval(timedInterval);
@@ -112,35 +162,80 @@ startBtn.addEventListener("click", function (){
     }, 1000);
 
 });
+var numberCorrect =0;
+var numberIncorrect =0;
+//  var finalScore=(numberCorrect+timeLeft);
+var buzz = new Audio("./assets/sounds/zapsplat_multimedia_game_show_buzzer_002_27374.mp3");
+var ding = new Audio("./assets/sounds/zapsplat_multimedia_correct_ping_tone_001_68778.mp3")
+
+// var correctRes = document.(".response").textContent=("Correct!");
+// var incorrectRes = document.querySelector(".response").textContent=("Incorrect!");
+
+// function corrResponse (){
+//     // document.querySelector(".response").hidden = false;
+//     // document.querySelector(".response").style.visibilty = "visible";
+//     document.querySelector(".response").innerHTML =("Correct");
+// };
 
 // function to click high score box - prompt to call the saved data in alert or prompt
+function buttonCheck (){
+    console.log(this.textContent);
+    if (this.textContent === questionsArr[questionTracking].correctAnswer){
+        numberCorrect += 10;
+        ding.play();
+        console.log(numberCorrect);
+        // var correctResponse = document.createElement("p");
+        // correctResponse.textContent=("Correct!")
+        // answerResp.appenChild(correctResponse);
+        document.querySelector(".response").textContent="Correct!"
+    } else {
+        numberIncorrect ++;
+        buzz.play();
+        // subtract 5 seconds for incorrect answer
+        timeLeft = timeLeft -= 5;
+        console.log(timeLeft)
+        document.querySelector(".response").textContent="Incorrect!"
 
+    }
+    questionTracking += 1
+    if (questionTracking<= 4){
+        questionCreation();
+    } else {
+        // saveScores();
+        finalPage();
+    }
+    // var finalScore= (numberCorrect+timeLeft);
+}
 
 // QUESTION Create Block
-var questionIndex = [];
+// var questionIndex = [];
 
 // questionsArr[questionIndex]
 
 var questionsArr = [
     {
-        question: "Question#1?",
-        answers: ["a", "b", "c", "d"],
-        correctAnswer: "a" 
+        question: "Boolean Data is a ______ type of data?",
+        answers: [
+            "True or False", 
+            "Undefined", 
+            "Textual Data", 
+            "None of the Above"],
+        correctAnswer: "True or False" 
     },
     {
         question: "Question#2?",
         answers: ["e", "f", "g", "h"],
-        correctAnswer: "b" 
+        correctAnswer: "e" 
     },
     {
         question: "Question#3?",
         answers: ["i", "j", "k", "l"],
-        correctAnswer: "c" 
+        correctAnswer: "i" 
     },
     {
         question: "Question#4?",
         answers: ["m", "n", "o", "p"],
-        correctAnswer: "d" 
+        correctAnswer: "m" 
     },
     {
         question: "Question#5?",
@@ -149,45 +244,62 @@ var questionsArr = [
     },
 ];
 
-// function for answering correct
-//  add point to score, give a correct propmpt, chime sound (if possible)
-// move to next question (function for each question?)
-
-// function for answering incorrect
-//  gong sound ( if possible), incorrect prompt, move to next question, subtract time from timer
 
 
 // question #1
 // select the section
 // add data attribute to question
 
-startBtn.addEventListener("click", function (){
-    function questionCreation(){
+startBtn.addEventListener("click", questionCreation)
 
-        backgroundClear();
-    
-        // append first 2 divs
-        questionSect.appendChild(questionNum);
-        questionSect.appendChild(answerBlock);
+function questionCreation(){
 
-        // append h1 into question div
-        questionNum.appendChild(questionText);
-    
-        // append answer and response to block
-        answerBlock.appendChild(multiChoice);
-        answerBlock.appendChild(answerResp);
+    backgroundClear();
 
-        // append choices under multichoice div
-        multiChoice.appendChild(choiceA);
-        multiChoice.appendChild(choiceB);
-        multiChoice.appendChild(choiceC);
-        multiChoice.appendChild(choiceD);
 
-        // append response p
-        answerResp.appendChild(corrIncNote);
-    };
-    questionCreation()
-})
+    document.getElementById("question").innerHTML=""
+
+    //create h1 - question text
+    questionText.textContent = questionsArr[questionTracking].question;
+
+
+    //create text and assign buttons
+    choiceA.textContent = questionsArr[questionTracking].answers[0];
+
+    choiceB.textContent = questionsArr[questionTracking].answers[1];
+
+    choiceC.textContent = questionsArr[questionTracking].answers[2];
+
+    choiceD.textContent = questionsArr[questionTracking].answers[3];
+
+    // create response p -- put outside of the function for buttonCheck to see
+    // corrNote.style.visibility="hidden";
+
+    // append first 2 divs
+    questionSect.appendChild(questionNum);
+    questionSect.appendChild(answerBlock);
+
+    // append h1 into question div
+    questionNum.appendChild(questionText);
+
+    // append answer and response to block
+    answerBlock.appendChild(multiChoice);
+    answerBlock.appendChild(answerResp);
+
+    // append choices under multichoice div
+    multiChoice.appendChild(choiceA);
+    multiChoice.appendChild(choiceB);
+    multiChoice.appendChild(choiceC);
+    multiChoice.appendChild(choiceD);
+    document.querySelector(".choiceA").addEventListener("click", buttonCheck)
+    document.querySelector(".choiceB").addEventListener("click", buttonCheck)
+    document.querySelector(".choiceC").addEventListener("click", buttonCheck)
+    document.querySelector(".choiceD").addEventListener("click", buttonCheck)
+
+    // append response p
+    answerResp.appendChild(corrNote);
+
+};
 
 // create final page
 
@@ -196,10 +308,12 @@ function finalPage(){
     backgroundClear();
     // question section clear
     questionClear();
+    // check if clearing the parenthesis removes timer
+    document.getElementById("timer").display="none";
+    clearInterval(timedInterval);
     function createFinal(){
         // append section
         finalSect.appendChild(doneBlock);
-        doneBlock.className=("doneBlock");
         // add class and append divs
         doneBlock.appendChild(doneMsgBlock);
         doneBlock.appendChild(scoreBlock);
@@ -210,25 +324,111 @@ function finalPage(){
         doneMsg.className =("doneMsg");
         doneMsgBlock.append(doneMsg);
         // div2
-        scoreMsg.textContent= "Final Score is 'Placholder for final'";
-        scoreMsg.className = ("scoreMsg");
+        scoreMsg.textContent= "Final Score is " + (numberCorrect+timeLeft);
+        // scoreMsg.className = ("scoreMsg");
         scoreBlock.appendChild(scoreMsg);
         // div 3
-        scoreSub.className=("scoresave");
-        initialP.className=("initials");
+        // scoreSub.className=("scoresave");
+        // initialP.className=("initials");
         initialP.textContent="Initials";
         scoreSub.appendChild(initialP);
         scoreInp.textContent = "Initials";
-        scoreInp.className = ("scoreInp");
+        // scoreInp.className = ("scoreInp");
         scoreSub.appendChild(scoreInp);
-        submitFinal.className = "submitBtn"
+        // submitFinal.className = "submitBtn"
         submitFinal.innerHTML=("Save");
         scoreSub.appendChild(submitFinal);
+
     };
     createFinal();
+    document.querySelector("#timer").visibility="hidden"
+    submitFinal.addEventListener("click", saveScores);
+
 };
 
+function createScorePage(){
+    backgroundClear();
+    questionClear();
+    finalPageClear();
+
+    // append Parent div highScoreBlock
+    scorePageFinal.appendChild(highScoreBlock);
+
+    // append the 3 divs into parent block
+    highScoreBlock.appendChild(highScoreMsg);
+    highScoreBlock.appendChild(highScoreList);
+    highScoreBlock.appendChild(highScoreBtns);
+
+    // append h1 into highscoremsg
+    highScore.textContent="HIGH SCORES";
+
+    // append the buttons into highScoreBtns
+    goBackBtn.textContent ="GoBack";
+    highScoreBtns.appendChild(goBackBtn);
+    clearScoreBtn.textContent = "Clear High Scores";
+    highScoreBtns.appendChild(clearScoreBtn);
+}
+
+// clears local storage
+clearScoreBtn.addEventListener("click", clearData);
+
+function clearData() {
+    window.localStorage.clear();
+}
+// create high score page
+submitFinal.addEventListener("click", createScorePage);
+
+// reload page function/start over
+goBackBtn.addEventListener("click", function (){
+    location.reload();
+});
+
+// *** Need to do ***
+// function to show correct/worn element - can it make a sound? how do i track answers? Assign correct true values to data (element.getAttribute(some data id from array?)) attribute?
+// add point if correct with ding and box, no point if incorrect with gong, box, and time deduction
+// function to add initals, save (saveTasks), and track high score
+// funtion for "view high score button"
+    // need to figure out how to display values only
+// general styling
+
+// possible saved score function
+var saveScores = function(){
+
+    var answersArr = JSON.parse(localStorage.getItem('scores')) || [];
+
+    answersArr.push({
+        name: scoreInp.value.trim(),
+        score: numberCorrect+timeLeft,
+    });
+
+    localStorage.setItem("scores", JSON.stringify(answersArr));
+};
+// possible load score function
+var loadScores = function(){
+    var savedScores = JSON.parse(localStorage.getItem("scores")) || [];
+    if (savedScores === null){
+        var savedScores = [];
+        return false;
+    }
+};
+
+// highScores.textContent=endScore.map(scores=>{return `<li class="highscore"> ${scores.name}></li>`}).join("")
 
 
-// function to save scores, track high score, add initials to save
-// button to go back to start/landing page to start over
+// retrieve and create high score list from local storage
+function displayHighScores(){
+    // retrieve from local storage
+    var endScores = JSON.parse(localStorage.getItem("scores")) || [];
+    // descending list
+    endScores.sort(function(a,b){
+        return b.score-a.score;
+    });
+    endScores.forEach(function(score){
+        var scoreList=document.createElement("li");
+        scoreList.textContent=score.name + "---" + score.score;
+
+        highScoreList.appendChild(scoreList);
+    });
+
+};
+

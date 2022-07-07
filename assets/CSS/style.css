@@ -70,7 +70,7 @@ header div p{
     border-radius: 10%;
 }
 
-.question, .finalpage{
+.question, .finalpage .scorepage{
     color:black;
     width: 100%;
     display: flex;
@@ -122,7 +122,15 @@ header div p{
    flex:wrap;
    display: flex;
    flex-direction: row;
-   align-content: space-around;
-   margin:0;
+   align-content: space-between;
+   /* margin: 25px 50px; come back to styling after get code working */
 }
 
+.scoreInp {
+    border: solid 5px var(---primaryborder);
+}
+
+.highscorelist {
+    color: black;
+    font-size: 16px;
+}
