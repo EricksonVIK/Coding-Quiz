@@ -2,8 +2,9 @@
 
 // View high scores
 var highScoreBtn = document.querySelector("#highScoreBtn");
-highScoreBtn.addEventListener("click", displayHighScores);
+highScoreBtn.addEventListener("click", alert(endScore));
 
+// IS THIS NEEDED? 
 var endScore = JSON.parse(localStorage.getItem("scores")) || [];
 
 
@@ -375,6 +376,25 @@ function createScorePage(){
     highScoreBtns.appendChild(goBackBtn);
     clearScoreBtn.textContent = "Clear High Scores";
     highScoreBtns.appendChild(clearScoreBtn);
+    // displays high scores at end without most recent score - the alert is still undefined -- CAN I MAKE IT THE HIGH SCORE OR NOT ALERT?
+    function displayHighScores(){
+        // retrieve from local storage
+        var endScores = JSON.parse(localStorage.getItem("scores")) || [];
+        // descending list
+        endScores.sort(function(a,b){
+            return b.score-a.score;
+        });
+        endScores.forEach(function(score){
+            var scoreList=document.createElement("li");
+            scoreList.innerHTML=score.name + "  ---  " + score.score;
+    
+            highScoreList.appendChild(scoreList);
+        });
+        // createScorePage();
+        // alerts displays the array, but no longer adds to score page
+        alert(JSON.stringify(endScores.name + " ---- " + endScores.score));
+    };
+    displayHighScores();
 }
 
 // clears local storage
@@ -414,23 +434,24 @@ var loadScores = function(){
 };
 
 
-
+// CAN I ADD THIS FUNCTION INTO THE SCOREPAGE AND SWITCH THE BUTTON TO JUST THE ALERT?
+// ENDSCORES WOULD NOT BE DEFINED - DIFFERENT VARIABLE?
 // retrieve and create high score list from local storage
-function displayHighScores(){
-    // retrieve from local storage
-    var endScores = JSON.parse(localStorage.getItem("scores")) || [];
-    // descending list
-    endScores.sort(function(a,b){
-        return b.score-a.score;
-    });
-    endScores.forEach(function(score){
-        var scoreList=document.createElement("li");
-        scoreList.innerHTML=score.name + "  ---  " + score.score;
+// function displayHighScores(){
+//     // retrieve from local storage
+//     var endScores = JSON.parse(localStorage.getItem("scores")) || [];
+//     // descending list
+//     endScores.sort(function(a,b){
+//         return b.score-a.score;
+//     });
+//     endScores.forEach(function(score){
+//         var scoreList=document.createElement("li");
+//         scoreList.innerHTML=score.name + "  ---  " + score.score;
 
-        highScoreList.appendChild(scoreList);
-    });
-    // createScorePage();
-    // alerts displays the array, but no longer adds to score page
-    alert(JSON.stringify(endScores.name + " ---- " + endScores.score));
-};
+//         highScoreList.appendChild(scoreList);
+//     });
+//     // createScorePage();
+//     // alerts displays the array, but no longer adds to score page
+//     alert(JSON.stringify(endScores.name + " ---- " + endScores.score));
+// };
 
