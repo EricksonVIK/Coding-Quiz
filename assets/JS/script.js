@@ -344,11 +344,11 @@ function finalPage(){
 
 };
 // attempting to add the alert for high score
-// if (finalScore.score > endScore.score){
-//     localStorage.setItem("highscore", score.score);
-//     localStorage.setItem("name", score.name);
-//     alert(score.name + " now has a new high score " + score.name + " ! ");
-// };
+if (finalScore.score > endScore.score){
+    localStorage.setItem("highscore", score.score);
+    localStorage.setItem("name", score.name);
+    alert(score.name + " now has a new high score " + score.name + " ! ");
+};
 
 function createScorePage(){
     backgroundClear();
@@ -429,6 +429,8 @@ function displayHighScores(){
 
         highScoreList.appendChild(scoreList);
     });
-    createScorePage();
+    // createScorePage();
+    // alerts displays the array, but no longer adds to score page
+    alert(JSON.stringify(endScores.name + " ---- " + endScores.score));
 };
 
