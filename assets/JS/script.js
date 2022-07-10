@@ -429,6 +429,6 @@ function displayHighScores(){
 
         highScoreList.appendChild(scoreList);
     });
-
+    createScorePage();
 };
 
